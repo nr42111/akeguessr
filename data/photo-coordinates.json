@@ -1,0 +1,72 @@
+{
+  "p_0001.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 4417,
+    "y": 3643,
+    "heading": 315
+  },
+  "p_0002.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-aburrey-quarry",
+    "x": 3575,
+    "y": 1438,
+    "heading": 263
+  },
+  "p_0003.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-sword-vault-dale",
+    "x": 3657,
+    "y": 2876,
+    "heading": 168
+  },
+  "p_0004.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-snowy-forest",
+    "x": 3212,
+    "y": 1257,
+    "heading": 9
+  },
+  "p_0005.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 7081,
+    "y": 8526,
+    "heading": 168
+  },
+  "p_0006.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-valley-pass",
+    "x": 1733,
+    "y": 2317,
+    "heading": 43
+  },
+  "p_0007.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-originium-science-park",
+    "x": 5703,
+    "y": 4051,
+    "heading": 139
+  },
+  "p_0008.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-marker-stone",
+    "x": 5303,
+    "y": 1543,
+    "heading": 0
+  },
+  "p_0009.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 5969,
+    "y": 1984,
+    "heading": 196
+  },
+  "p_0010.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-sis-painting",
+    "x": 2576,
+    "y": 2902,
+    "heading": 73
+  }
+}

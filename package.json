@@ -1,0 +1,13 @@
+{
+  "name": "akeguessr",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A GeoGuessr-style game for custom regions and sub-regions, hosted on GitHub Pages.",
+  "scripts": {
+    "test": "node --test tools/geo.test.mjs",
+    "validate": "node tools/validate-data.mjs",
+    "check": "npm run test && npm run validate",
+    "dev": "node tools/dev-server.mjs"
+  }
+}

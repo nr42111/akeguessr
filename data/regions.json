@@ -1,0 +1,190 @@
+{
+  "regions": [
+    {
+      "id": "valley-iv",
+      "name": "Valley IV",
+      "squareMeters": 55,
+      "squarePixels": 500,
+      "subRegions": [
+        {
+          "id": "valley-iv-the-hub",
+          "code": "HB",
+          "name": "The Hub",
+          "mapImage": "assets/maps/valley-iv-the-hub.webp",
+          "mapSize": {
+            "width": 9000,
+            "height": 6500
+          }
+        },
+        {
+          "id": "valley-iv-originium-science-park",
+          "code": "OP",
+          "name": "Originium Science Park",
+          "mapImage": "assets/maps/valley-iv-originium-science-park.webp",
+          "mapSize": {
+            "width": 7000,
+            "height": 5500
+          }
+        },
+        {
+          "id": "valley-iv-valley-pass",
+          "code": "VP",
+          "name": "Valley Pass",
+          "mapImage": "assets/maps/valley-iv-valley-pass.webp",
+          "mapSize": {
+            "width": 4500,
+            "height": 4500
+          }
+        },
+        {
+          "id": "valley-iv-aburrey-quarry",
+          "code": "AQ",
+          "name": "Aburrey Quarry",
+          "mapImage": "assets/maps/valley-iv-aburrey-quarry.webp",
+          "mapSize": {
+            "width": 4000,
+            "height": 4500
+          }
+        },
+        {
+          "id": "valley-iv-origin-lodespring",
+          "code": "OL",
+          "name": "Origin Lodespring",
+          "mapImage": "assets/maps/valley-iv-origin-lodespring.webp",
+          "mapSize": {
+            "width": 6000,
+            "height": 7000
+          }
+        },
+        {
+          "id": "valley-iv-power-plateau",
+          "code": "PL",
+          "name": "Power Plateau",
+          "mapImage": "assets/maps/valley-iv-power-plateau.webp",
+          "mapSize": {
+            "width": 6000,
+            "height": 7500
+          }
+        }
+      ]
+    },
+    {
+      "id": "wuling",
+      "name": "Wuling",
+      "squareMeters": 62,
+      "squarePixels": 500,
+      "subRegions": [
+        {
+          "id": "wuling-wuling-city",
+          "code": "WL",
+          "name": "Wuling City",
+          "mapImage": "assets/maps/wuling-wuling-city.webp",
+          "mapSize": {
+            "width": 9500,
+            "height": 11000
+          }
+        },
+        {
+          "id": "wuling-jingyu-valley",
+          "code": "JY",
+          "name": "Jingyu Valley",
+          "mapImage": "assets/maps/wuling-jingyu-valley.webp",
+          "mapSize": {
+            "width": 6000,
+            "height": 9500
+          }
+        },
+        {
+          "id": "wuling-qingbo-stockade",
+          "code": "QB",
+          "name": "Qingbo Stockade",
+          "mapImage": "assets/maps/wuling-qingbo-stockade.webp",
+          "mapSize": {
+            "width": 5500,
+            "height": 7000
+          }
+        },
+        {
+          "id": "wuling-marker-stone",
+          "code": "MS",
+          "name": "Marker Stone",
+          "mapImage": "assets/maps/wuling-marker-stone.webp",
+          "mapSize": {
+            "width": 8000,
+            "height": 7500
+          }
+        },
+        {
+          "id": "wuling-test-area",
+          "code": "TA",
+          "name": "Test Area",
+          "mapImage": "assets/maps/wuling-test-area.webp",
+          "mapSize": {
+            "width": 7000,
+            "height": 5500
+          }
+        },
+        {
+          "id": "wuling-sword-vault-dale",
+          "code": "SV",
+          "name": "Sword Vault Dale",
+          "mapImage": "assets/maps/wuling-sword-vault-dale.webp",
+          "mapSize": {
+            "width": 7500,
+            "height": 5000
+          }
+        },
+        {
+          "id": "wuling-yinglung-pass",
+          "code": "YL",
+          "name": "Yinglung Pass",
+          "mapImage": "assets/maps/wuling-yinglung-pass.webp",
+          "mapSize": {
+            "width": 6500,
+            "height": 5000
+          }
+        },
+        {
+          "id": "wuling-north-wuling-exclusion-zone",
+          "code": "EZ",
+          "name": "North Wuling Exclusion Zone",
+          "mapImage": "assets/maps/wuling-north-wuling-exclusion-zone.webp",
+          "mapSize": {
+            "width": 10000,
+            "height": 8000
+          }
+        },
+        {
+          "id": "wuling-snowy-forest",
+          "code": "SF",
+          "name": "Snowy Forest",
+          "mapImage": "assets/maps/wuling-snowy-forest.webp",
+          "mapSize": {
+            "width": 6500,
+            "height": 5500
+          }
+        },
+        {
+          "id": "wuling-sis-painting",
+          "code": "SP",
+          "name": "Si's Painting",
+          "mapImage": "assets/maps/wuling-sis-painting.webp",
+          "mapSize": {
+            "width": 13500,
+            "height": 9000
+          }
+        },
+        {
+          "id": "wuling-suming",
+          "code": "SM",
+          "name": "Suiming",
+          "mapImage": "assets/maps/wuling-suming.webp",
+          "mapSize": {
+            "width": 4500,
+            "height": 4500
+          }
+        }
+      ]
+    }
+  ]
+}
