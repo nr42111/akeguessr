@@ -28,6 +28,8 @@ const state = {
   selectionRegion: null,
   heading: null,
   mapTarget: null,
+  reviewMapController: null,
+  reviewRequestId: 0,
 };
 
 const photoView = {
@@ -97,8 +99,17 @@ function cacheElements() {
     "finalScore",
     "bestLine",
     "roundBreakdown",
+    "shareButton",
     "playAgainButton",
     "homeButton",
+    "reviewOverlay",
+    "reviewBackButton",
+    "reviewTitle",
+    "reviewDetail",
+    "reviewPhoto",
+    "reviewPhotoFallback",
+    "reviewMap",
+    "reviewMapLoading",
     "toast",
     "quitDialog",
   ];
@@ -613,6 +624,7 @@ function selectSubRegion(subRegion) {
 }
 
 function startGame() {
+  closeReview();
   if (state.locations.length === 0) {
     showToast("No playable locations are available.");
     return;
@@ -740,24 +752,307 @@ function renderBreakdown() {
       : "Wrong sub-region";
 
     elements.roundBreakdown.append(
-      create("div", { className: "breakdown-row" }, [
-        create("span", { className: "breakdown-round", text: `Round ${index + 1}` }),
-        create("span", { className: "breakdown-place" }, [
-          create("strong", { text: placeName }),
-          create("span", { text: detail }),
-        ]),
-        create("span", { className: "breakdown-result" }, [
-          create("strong", { text: `${formatNumber(entry.points)} pts` }),
-          create("span", { text: entry.correctSubRegion ? "Correct" : "Miss" }),
-        ]),
-      ])
+      create(
+        "button",
+        {
+          className: "breakdown-row",
+          attrs: { type: "button", title: "Review this round" },
+          on: { click: () => openReview(entry) },
+        },
+        [
+          create("span", { className: "breakdown-round", text: `Round ${index + 1}` }),
+          create("span", { className: "breakdown-place" }, [
+            create("strong", { text: placeName }),
+            create("span", { text: detail }),
+          ]),
+          create("span", { className: "breakdown-result" }, [
+            create("strong", { text: `${formatNumber(entry.points)} pts` }),
+            create("span", { text: entry.correctSubRegion ? "Correct" : "Miss" }),
+          ]),
+          create("span", { className: "breakdown-chevron", text: "›" }),
+        ]
+      )
     );
   });
+}
+
+function resetReviewLoading() {
+  elements.reviewMapLoading.classList.remove("error");
+  clear(elements.reviewMapLoading);
+  elements.reviewMapLoading.textContent = "Loading map\u2026";
+}
+
+function closeReview() {
+  state.reviewRequestId += 1;
+  if (state.reviewMapController) {
+    state.reviewMapController.destroy();
+    state.reviewMapController = null;
+  }
+  hide(elements.reviewOverlay);
+  clear(elements.reviewMap);
+  hide(elements.reviewMapLoading);
+  elements.reviewPhoto.removeAttribute("src");
+}
+
+function setReviewPhoto(src) {
+  elements.reviewPhoto.style.visibility = "hidden";
+  hide(elements.reviewPhotoFallback);
+  elements.reviewPhoto.src = src;
+}
+
+async function loadReviewMap(entry, subRegion) {
+  const requestId = ++state.reviewRequestId;
+  if (state.reviewMapController) {
+    state.reviewMapController.destroy();
+    state.reviewMapController = null;
+  }
+  clear(elements.reviewMap);
+  resetReviewLoading();
+  show(elements.reviewMapLoading);
+
+  try {
+    const controller = await createMapController(elements.reviewMap, {
+      imageUrl: subRegion.mapImage,
+      mapSize: subRegion.mapSize,
+    });
+
+    if (requestId !== state.reviewRequestId) {
+      controller.destroy();
+      return;
+    }
+
+    state.reviewMapController = controller;
+
+    if (entry.correctSubRegion && entry.guess) {
+      controller.setGuess(entry.guess.x, entry.guess.y);
+      controller.lock();
+      controller.addAnswer(entry.location.x, entry.location.y);
+    } else {
+      controller.lock();
+      controller.addAnswer(entry.location.x, entry.location.y);
+      window.setTimeout(() => controller.fit(), 80);
+    }
+
+    hide(elements.reviewMapLoading);
+  } catch (error) {
+    if (requestId !== state.reviewRequestId) return;
+    console.error(error);
+    elements.reviewMapLoading.classList.add("error");
+    elements.reviewMapLoading.textContent = `Map failed to load: ${error.message}`;
+    show(elements.reviewMapLoading);
+  }
+}
+
+function openReview(entry) {
+  if (!state.game) return;
+  const location = entry.location;
+  const subRegion = state.subRegionById.get(location.subRegionId);
+  if (!subRegion) {
+    showToast("The map for this round is unavailable.");
+    return;
+  }
+
+  const picked = entry.selectedSubRegionId
+    ? state.subRegionById.get(entry.selectedSubRegionId)
+    : null;
+
+  elements.reviewTitle.textContent = `${subRegion.region.name} — ${subRegion.name}`;
+  let detail = entry.correctSubRegion
+    ? `${formatDistanceMeters(entry.distanceMeters)} from target · ${formatNumber(entry.points)} pts`
+    : "Wrong sub-region · 0 pts";
+  if (!entry.correctSubRegion && picked) {
+    detail += ` · picked ${picked.region.name} — ${picked.name}`;
+  }
+  elements.reviewDetail.textContent = detail;
+
+  setReviewPhoto(location.image);
+  show(elements.reviewOverlay);
+  loadReviewMap(entry, subRegion);
+}
+
+function downloadBlob(blob) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "akeguessr-results.png";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function roundedRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + width, y, x + width, y + height, radius);
+  ctx.arcTo(x + width, y + height, x, y + height, radius);
+  ctx.arcTo(x, y + height, x, y, radius);
+  ctx.arcTo(x, y, x + width, y, radius);
+  ctx.closePath();
+}
+
+function fitText(ctx, text, maxWidth) {
+  if (ctx.measureText(text).width <= maxWidth) return text;
+  let value = text;
+  while (value.length > 1 && ctx.measureText(`${value}\u2026`).width > maxWidth) {
+    value = value.slice(0, -1);
+  }
+  return `${value}\u2026`;
+}
+
+function buildResultsBlob() {
+  const results = state.game?.results ?? [];
+  const padding = 56;
+  const width = 1100;
+  const rowHeight = 84;
+  const rowGap = 12;
+  const headerHeight = 270;
+  const height =
+    padding + headerHeight + results.length * (rowHeight + rowGap) - rowGap + padding;
+  const scale = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(width * scale);
+  canvas.height = Math.round(height * scale);
+  const ctx = canvas.getContext("2d");
+  ctx.scale(scale, scale);
+
+  const background = ctx.createLinearGradient(0, 0, width, height);
+  background.addColorStop(0, "#13202d");
+  background.addColorStop(1, "#080d13");
+  ctx.fillStyle = background;
+  ctx.fillRect(0, 0, width, height);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(1, 1, width - 2, height - 2);
+
+  ctx.fillStyle = "#3ddc97";
+  ctx.font = '800 20px "Segoe UI", Arial, sans-serif';
+  ctx.fillText("akeguessr", padding, padding + 22);
+
+  ctx.fillStyle = "#93a8ba";
+  ctx.font = '800 12px "Segoe UI", Arial, sans-serif';
+  ctx.fillText("GAME COMPLETE", padding, padding + 58);
+
+  ctx.fillStyle = "#edf4fa";
+  ctx.font = '800 44px "Segoe UI", Arial, sans-serif';
+  ctx.fillText("Final score", padding, padding + 108);
+
+  const total = formatNumber(totalScore(state.game));
+  ctx.fillStyle = "#edf4fa";
+  ctx.font = '900 72px "Segoe UI", Arial, sans-serif';
+  ctx.fillText(total, padding, padding + 188);
+  const scoreWidth = ctx.measureText(total).width;
+  ctx.fillStyle = "#93a8ba";
+  ctx.font = '600 22px "Segoe UI", Arial, sans-serif';
+  ctx.fillText("/ 25,000", padding + scoreWidth + 14, padding + 188);
+
+  ctx.fillStyle = "#93a8ba";
+  ctx.font = '500 18px "Segoe UI", Arial, sans-serif';
+  ctx.fillText(elements.bestLine.textContent, padding, padding + 228);
+
+  let y = padding + headerHeight;
+  results.forEach((entry, index) => {
+    const subRegion = state.subRegionById.get(entry.location.subRegionId);
+    const placeName = subRegion
+      ? `${subRegion.region.name} \u2014 ${subRegion.name}`
+      : "Unknown location";
+    const detail = entry.correctSubRegion
+      ? `${formatDistanceMeters(entry.distanceMeters)} away`
+      : "Wrong sub-region";
+
+    roundedRect(ctx, padding, y, width - padding * 2, rowHeight, 14);
+    ctx.fillStyle = "#101923";
+    ctx.fill();
+    ctx.strokeStyle = "#223243";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#93a8ba";
+    ctx.font = '700 12px "Segoe UI", Arial, sans-serif';
+    ctx.fillText(`ROUND ${index + 1}`, padding + 20, y + 23);
+
+    ctx.fillStyle = "#edf4fa";
+    ctx.font = '700 20px "Segoe UI", Arial, sans-serif';
+    ctx.fillText(
+      fitText(ctx, placeName, width - padding * 2 - 320),
+      padding + 20,
+      y + 51
+    );
+
+    ctx.fillStyle = "#93a8ba";
+    ctx.font = '500 13px "Segoe UI", Arial, sans-serif';
+    ctx.fillText(detail, padding + 20, y + 71);
+
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#edf4fa";
+    ctx.font = '800 22px "Segoe UI", Arial, sans-serif';
+    ctx.fillText(`${formatNumber(entry.points)} pts`, width - padding - 20, y + 47);
+
+    ctx.fillStyle = entry.correctSubRegion ? "#3ddc97" : "#ff8f8f";
+    ctx.font = '700 12px "Segoe UI", Arial, sans-serif';
+    ctx.fillText(
+      entry.correctSubRegion ? "Correct" : "Miss",
+      width - padding - 20,
+      y + 69
+    );
+
+    y += rowHeight + rowGap;
+  });
+
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error("Could not create the results image."));
+    }, "image/png");
+  });
+}
+
+async function shareResults() {
+  if (!state.game) return;
+
+  const originalLabel = elements.shareButton.textContent;
+  elements.shareButton.disabled = true;
+  elements.shareButton.textContent = "Preparing\u2026";
+
+  try {
+    const blob = await buildResultsBlob();
+    const file = new File([blob], "akeguessr-results.png", { type: "image/png" });
+    const canNativeShare =
+      Boolean(navigator.canShare && navigator.share) &&
+      window.matchMedia("(pointer: coarse)").matches &&
+      navigator.canShare({ files: [file] });
+
+    if (canNativeShare) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: "akeguessr results",
+        });
+        showToast("Results shared.");
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          downloadBlob(blob);
+          showToast("Results screenshot downloaded.");
+        }
+      }
+    } else {
+      downloadBlob(blob);
+      showToast("Results screenshot downloaded.");
+    }
+  } catch (error) {
+    console.error(error);
+    showToast("Could not create the results screenshot.");
+  } finally {
+    elements.shareButton.disabled = false;
+    elements.shareButton.textContent = originalLabel;
+  }
 }
 
 function finishGame() {
   if (!state.game) return;
 
+  closeReview();
   const total = totalScore(state.game);
   const { best, isNew } = updateBestScore(total);
   state.bestScore = best;
@@ -775,6 +1070,7 @@ function finishGame() {
 }
 
 function quitToStart() {
+  closeReview();
   resetMapState();
   state.game = null;
   state.currentRound = null;
@@ -819,8 +1115,29 @@ function bindEvents() {
 
   elements.confirmButton.addEventListener("click", confirmGuess);
   elements.nextButton.addEventListener("click", goToNextRound);
+  elements.shareButton.addEventListener("click", shareResults);
+  elements.reviewBackButton.addEventListener("click", closeReview);
+  elements.reviewOverlay.addEventListener("click", (event) => {
+    if (event.target === elements.reviewOverlay) closeReview();
+  });
+  elements.reviewPhoto.addEventListener("load", () => {
+    elements.reviewPhoto.style.visibility = "visible";
+    hide(elements.reviewPhotoFallback);
+  });
+  elements.reviewPhoto.addEventListener("error", () => {
+    elements.reviewPhoto.style.visibility = "hidden";
+    show(elements.reviewPhotoFallback);
+  });
 
   document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      !elements.reviewOverlay.classList.contains("hidden")
+    ) {
+      closeReview();
+      return;
+    }
+    if (event.code !== "Space" || event.repeat) return;
     if (event.code !== "Space" || event.repeat) return;
     if (elements.gameScreen.classList.contains("hidden")) return;
     if (elements.quitDialog.open) return;

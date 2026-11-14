@@ -105,15 +105,38 @@
       </section>
 
       <section id="summaryScreen" class="screen hidden">
-        <div class="card summary-card">
+        <div id="summaryCard" class="card summary-card">
           <p class="eyebrow">Game complete</p>
           <h1>Final score</h1>
           <div class="final-score"><span id="finalScore">0</span><span class="muted"> / 25,000</span></div>
           <p id="bestLine" class="best-line"></p>
           <div id="roundBreakdown" class="breakdown"></div>
           <div class="summary-actions">
+            <button id="shareButton" class="ghost" type="button">Share screenshot</button>
             <button id="playAgainButton" class="primary" type="button">New game</button>
             <button id="homeButton" class="ghost" type="button">Home</button>
+          </div>
+        </div>
+
+        <div id="reviewOverlay" class="review-overlay hidden">
+          <div class="review-panel">
+            <div class="review-header">
+              <button id="reviewBackButton" class="ghost small" type="button">Back</button>
+              <div class="review-heading">
+                <h2 id="reviewTitle">Round review</h2>
+                <p id="reviewDetail"></p>
+              </div>
+            </div>
+            <div class="review-grid">
+              <div class="review-photo-wrap">
+                <img id="reviewPhoto" alt="Photo from this round" />
+                <div id="reviewPhotoFallback" class="photo-fallback hidden">Photo unavailable</div>
+              </div>
+              <div class="review-map-wrap">
+                <div id="reviewMap" class="map"></div>
+                <div id="reviewMapLoading" class="map-overlay hidden">Loading map&hellip;</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
