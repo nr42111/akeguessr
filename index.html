@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A GeoGuessr-style photo location guessing game for custom regions and sub-regions." />
+  <meta name="description" content="A no-moving, no-panning GeoGuessr-style game with static photos for custom regions and sub-regions." />
   <meta name="theme-color" content="#0b1118" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <title>akeguessr</title>
@@ -24,9 +24,9 @@
     <main class="main">
       <section id="startScreen" class="screen">
         <div class="card start-card">
-          <p class="eyebrow">Custom location guessing</p>
+          <p class="eyebrow">Static-photo location guessing</p>
           <h1>How well do you know these places?</h1>
-          <p class="lede">You get five photos. Open the map, choose the region and sub-region, then drop a pin. Closer guesses score more; the wrong sub-region scores zero.</p>
+          <p class="lede">You get five static photos. There is no moving or panning: each round is a single fixed view. Open the map, choose the region and sub-region, then drop a pin. Closer guesses score more; the wrong sub-region scores zero.</p>
           <div class="best-line">Personal best <strong id="bestScoreStart">0</strong> <span class="muted">/ 25,000</span></div>
           <button id="playButton" class="primary large" type="button" disabled>Loading&hellip;</button>
           <p id="dataError" class="notice hidden" role="alert"></p>
@@ -63,6 +63,7 @@
 
           <section id="mapView" class="map-view hidden">
             <div id="map" class="map"></div>
+            <div id="mapLayers" class="layer-selector hidden" role="group" aria-label="Map layer"></div>
             <div id="mapLoading" class="map-overlay hidden">Loading map&hellip;</div>
             <button id="mapPipButton" class="pip-label hidden" type="button" aria-label="Show map">
               <span>Map</span>
@@ -134,6 +135,7 @@
               </div>
               <div class="review-map-wrap">
                 <div id="reviewMap" class="map"></div>
+                <div id="reviewMapLayers" class="layer-selector hidden" role="group" aria-label="Map layer"></div>
                 <div id="reviewMapLoading" class="map-overlay hidden">Loading map&hellip;</div>
               </div>
             </div>

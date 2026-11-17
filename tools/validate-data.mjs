@@ -67,6 +67,28 @@ function checkMapSize(subRegionId, mapSize) {
   return valid;
 }
 
+function checkLayerRect(subRegionId, layer) {
+  let valid = true;
+  for (const key of ["offsetX", "offsetY", "width", "height"]) {
+    if (!isFiniteNumber(layer[key])) {
+      errors.push(
+        `sub-region "${subRegionId}" layer "${layer.id}" ${key} must be a finite number.`
+      );
+      valid = false;
+    }
+  }
+  if (!valid) return null;
+  if (layer.offsetX < 0 || layer.offsetY < 0) {
+    errors.push(`sub-region "${subRegionId}" layer "${layer.id}" offsets must be non-negative.`);
+    valid = false;
+  }
+  if (layer.width <= 0 || layer.height <= 0) {
+    errors.push(`sub-region "${subRegionId}" layer "${layer.id}" size must be positive.`);
+    valid = false;
+  }
+  return valid ? layer : null;
+}
+
 async function checkAsset(relativePath, label) {
   if (typeof relativePath !== "string" || relativePath.trim() === "") {
     errors.push(`${label} must be a non-empty path.`);
@@ -161,6 +183,53 @@ async function main() {
       subRegionById.set(subRegion.id, { ...subRegion, regionId: region.id });
       checkMapSize(subRegion.id, subRegion.mapSize);
       await checkAsset(subRegion.mapImage, `sub-region "${subRegion.id}" mapImage`);
+
+      if (subRegion.layers != null) {
+        if (!Array.isArray(subRegion.layers)) {
+          errors.push(`sub-region "${subRegion.id}" layers must be an array.`);
+        } else {
+          const layerIds = new Set();
+          for (const layer of subRegion.layers) {
+            if (!layer || typeof layer !== "object") {
+              errors.push(`sub-region "${subRegion.id}" has an invalid layer entry.`);
+              continue;
+            }
+            if (typeof layer.id !== "string" || layer.id.trim() === "") {
+              errors.push(`sub-region "${subRegion.id}" has a layer without an id.`);
+              continue;
+            }
+            if (layerIds.has(layer.id)) {
+              errors.push(
+                `sub-region "${subRegion.id}" has duplicate layer id "${layer.id}".`
+              );
+              continue;
+            }
+            layerIds.add(layer.id);
+            if (typeof layer.name !== "string" || layer.name.trim() === "") {
+              errors.push(
+                `sub-region "${subRegion.id}" layer "${layer.id}" is missing a name.`
+              );
+            }
+            const rect = checkLayerRect(subRegion.id, layer);
+            if (
+              rect &&
+              subRegion.mapSize &&
+              isFiniteNumber(subRegion.mapSize.width) &&
+              isFiniteNumber(subRegion.mapSize.height) &&
+              (rect.offsetX + rect.width > subRegion.mapSize.width ||
+                rect.offsetY + rect.height > subRegion.mapSize.height)
+            ) {
+              errors.push(
+                `sub-region "${subRegion.id}" layer "${layer.id}" is outside the map bounds.`
+              );
+            }
+            await checkAsset(
+              layer.image,
+              `sub-region "${subRegion.id}" layer "${layer.id}" image`
+            );
+          }
+        }
+      }
     }
   }
 

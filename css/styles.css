@@ -977,6 +977,83 @@ button {
   backdrop-filter: blur(8px);
 }
 
+.layer-selector {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  max-height: calc(100% - 100px);
+  padding: 2px;
+  overflow-y: auto;
+  pointer-events: none;
+  scrollbar-width: thin;
+}
+
+.layer-button {
+  pointer-events: auto;
+  min-width: 50px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(8, 13, 19, 0.78);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  backdrop-filter: blur(9px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.layer-button:hover {
+  background: rgba(23, 37, 51, 0.92);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.layer-button.active {
+  border-color: rgba(61, 220, 151, 0.75);
+  background: var(--accent);
+  color: #06130d;
+}
+
+.layer-button.loading {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.layer-button:disabled {
+  cursor: default;
+}
+
+.play-stage[data-view="photo"] .map-view .layer-selector {
+  display: none;
+}
+
+.review-map-wrap .layer-selector {
+  right: 12px;
+  bottom: 12px;
+}
+
+@media (max-width: 560px) {
+  .layer-selector {
+    right: 10px;
+    bottom: 10px;
+    max-height: calc(100% - 80px);
+  }
+
+  .layer-button {
+    min-width: 44px;
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+}
+
 .stage-actions {
   position: absolute;
   left: 50%;

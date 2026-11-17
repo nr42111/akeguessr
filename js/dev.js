@@ -32,6 +32,7 @@ function cacheElements() {
     "devPhotoPipButton",
     "devMapView",
     "devMap",
+    "devMapLayers",
     "devMapLoading",
     "devMapPipButton",
     "devMapTitle",
@@ -305,6 +306,9 @@ async function loadMap(subRegion, options = {}) {
     const controller = await createMapController(elements.devMap, {
       imageUrl: subRegion.mapImage,
       mapSize: subRegion.mapSize,
+      layers: subRegion.layers ?? [],
+      layerContainer: elements.devMapLayers,
+      onLayerError: (error) => setStatus(error.message, "error"),
     });
 
     if (requestId !== state.mapRequestId) {

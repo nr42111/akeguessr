@@ -8,6 +8,7 @@ import {
   totalScore,
 } from "./game.js";
 import { createMapController } from "./map.js";
+import { MAX_POINTS } from "./scoring.js";
 import { loadBestScore, updateBestScore } from "./storage.js";
 import { byId, clear, create, formatNumber, hide, show } from "./ui.js";
 
@@ -44,6 +45,10 @@ const photoView = {
 
 const elements = {};
 const preloadedPhotos = [];
+const preloadedMaps = { queued: false, started: false };
+const perfectSound = new Audio("assets/sounds/YAAHHO.mp3");
+perfectSound.preload = "auto";
+perfectSound.volume = 0.8;
 let mapRequestId = 0;
 let toastTimer = null;
 
@@ -77,6 +82,7 @@ function cacheElements() {
     "compassCardinal",
     "mapView",
     "map",
+    "mapLayers",
     "mapLoading",
     "mapPipButton",
     "mapTitle",
@@ -109,6 +115,7 @@ function cacheElements() {
     "reviewPhoto",
     "reviewPhotoFallback",
     "reviewMap",
+    "reviewMapLayers",
     "reviewMapLoading",
     "toast",
     "quitDialog",
@@ -398,6 +405,9 @@ async function loadMap(subRegion, options = {}) {
       imageUrl: subRegion.mapImage,
       mapSize: subRegion.mapSize,
       locked: Boolean(options.locked),
+      layers: subRegion.layers ?? [],
+      layerContainer: elements.mapLayers,
+      onLayerError: (error) => showToast(error.message),
     });
 
     if (requestId !== mapRequestId) {
@@ -478,6 +488,75 @@ function preloadNextPhoto() {
   const image = new Image();
   image.src = nextLocation.image;
   preloadedPhotos.push(image);
+}
+
+function playPerfectSound() {
+  perfectSound.currentTime = 0;
+  const playback = perfectSound.play();
+  if (playback) playback.catch(() => {});
+}
+
+function shouldPrefetchMaps() {
+  const connection = navigator.connection;
+  if (connection?.saveData) return false;
+  if (connection?.effectiveType && /(^|-)2g$/.test(connection.effectiveType)) return false;
+  return true;
+}
+
+function mapAssetUrls() {
+  const urls = [];
+  for (const region of state.regions) {
+    for (const subRegion of region.subRegions ?? []) {
+      if (subRegion.mapImage) urls.push(subRegion.mapImage);
+    }
+  }
+  for (const region of state.regions) {
+    for (const subRegion of region.subRegions ?? []) {
+      for (const layer of subRegion.layers ?? []) {
+        if (layer.image) urls.push(layer.image);
+      }
+    }
+  }
+  return [...new Set(urls)];
+}
+
+async function prefetchMapImages() {
+  if (preloadedMaps.started) return;
+  preloadedMaps.started = true;
+  if (!shouldPrefetchMaps()) return;
+
+  const urls = mapAssetUrls();
+  let index = 0;
+
+  async function worker() {
+    while (index < urls.length) {
+      const url = urls[index];
+      index += 1;
+      try {
+        const response = await fetch(url, { cache: "default", priority: "low" });
+        if (response.ok) await response.arrayBuffer();
+      } catch {}
+    }
+  }
+
+  await Promise.all([worker(), worker()]);
+}
+
+function scheduleMapPrefetch() {
+  if (preloadedMaps.queued) return;
+  preloadedMaps.queued = true;
+
+  const start = () => {
+    window.setTimeout(() => {
+      prefetchMapImages();
+    }, 1200);
+  };
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(start, { timeout: 4000 });
+  } else {
+    start();
+  }
 }
 
 function applyPhotoTransform() {
@@ -638,6 +717,7 @@ function startGame() {
   showScreen("game");
   updateHud();
   startRound();
+  scheduleMapPrefetch();
 }
 
 function startRound() {
@@ -694,6 +774,8 @@ function showRoundResult(result) {
   elements.nextButton.textContent =
     state.game.results.length >= state.game.rounds.length ? "See results" : "Next round";
   syncStage();
+
+  if (result.points >= MAX_POINTS) playPerfectSound();
 
   const location = state.currentRound;
   const correctSubRegion = state.subRegionById.get(location.subRegionId);
@@ -814,6 +896,9 @@ async function loadReviewMap(entry, subRegion) {
     const controller = await createMapController(elements.reviewMap, {
       imageUrl: subRegion.mapImage,
       mapSize: subRegion.mapSize,
+      layers: subRegion.layers ?? [],
+      layerContainer: elements.reviewMapLayers,
+      onLayerError: (error) => showToast(error.message),
     });
 
     if (requestId !== state.reviewRequestId) {

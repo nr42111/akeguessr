@@ -1,3 +1,7 @@
+import { clear, create, hide, show } from "./ui.js";
+
+const LAYER_ORDER = ["b1", "b2", "b3", "b4", "l1", "l2", "l3", "l4"];
+
 function loadImage(src) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -5,6 +9,11 @@ function loadImage(src) {
     image.onerror = () => reject(new Error(`Could not load map image: ${src}`));
     image.src = src;
   });
+}
+
+function layerRank(id) {
+  const index = LAYER_ORDER.indexOf(id);
+  return index === -1 ? LAYER_ORDER.length : index;
 }
 
 function guessIcon() {
@@ -23,7 +32,17 @@ function answerIcon() {
   });
 }
 
-export async function createMapController(container, { imageUrl, mapSize, locked = false }) {
+export async function createMapController(
+  container,
+  {
+    imageUrl,
+    mapSize,
+    locked = false,
+    layers = [],
+    layerContainer = null,
+    onLayerError = null,
+  }
+) {
   if (!window.L) {
     throw new Error("Leaflet failed to load. Check your connection and reload.");
   }
@@ -57,9 +76,18 @@ export async function createMapController(container, { imageUrl, mapSize, locked
     [height, width],
   ]);
 
-  L.imageOverlay(imageUrl, mapBounds).addTo(map);
+  const baseOverlay = L.imageOverlay(imageUrl, mapBounds).addTo(map);
   map.fitBounds(mapBounds, { padding: [12, 12] });
   map.setMaxBounds(mapBounds);
+
+  const layerById = new Map(
+    (Array.isArray(layers) ? layers : [])
+      .filter((layer) => layer && typeof layer.id === "string")
+      .map((layer) => [layer.id, layer])
+  );
+  let currentLayerId = "base";
+  let activeLayerOverlay = null;
+  let layerRequestId = 0;
 
   let guess = null;
   let guessMarker = null;
@@ -71,6 +99,149 @@ export async function createMapController(container, { imageUrl, mapSize, locked
   function toCrs(px, py) {
     return L.latLng(height - py, px);
   }
+
+  function sortedLayers() {
+    return [...layerById.values()].sort((a, b) => layerRank(a.id) - layerRank(b.id));
+  }
+
+  function updateLayerButtons() {
+    if (!layerContainer) return;
+    for (const button of layerContainer.querySelectorAll(".layer-button")) {
+      const active = button.dataset.layer === currentLayerId;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    }
+  }
+
+  async function applyLayer(layerId) {
+    const target = layerId || "base";
+    if (target === currentLayerId) return;
+
+    const requestId = ++layerRequestId;
+
+    if (target === "base") {
+      if (activeLayerOverlay) {
+        activeLayerOverlay.remove();
+        activeLayerOverlay = null;
+      }
+      baseOverlay.setOpacity(1);
+      currentLayerId = "base";
+      updateLayerButtons();
+      return;
+    }
+
+    const layer = layerById.get(target);
+    if (!layer) {
+      throw new Error(`Unknown map layer: ${target}`);
+    }
+
+    const offsetX = Number(layer.offsetX);
+    const offsetY = Number(layer.offsetY);
+    const layerWidth = Number(layer.width);
+    const layerHeight = Number(layer.height);
+    if (
+      ![offsetX, offsetY, layerWidth, layerHeight].every(Number.isFinite) ||
+      offsetX < 0 ||
+      offsetY < 0 ||
+      layerWidth <= 0 ||
+      layerHeight <= 0 ||
+      (mapSize &&
+        (offsetX + layerWidth > mapSize.width || offsetY + layerHeight > mapSize.height))
+    ) {
+      throw new Error(`The layer "${target}" has invalid bounds.`);
+    }
+
+    const image = await loadImage(layer.image);
+    if (requestId !== layerRequestId) return;
+
+    const naturalWidth = image.naturalWidth || image.width;
+    const naturalHeight = image.naturalHeight || image.height;
+    if (naturalWidth !== layerWidth || naturalHeight !== layerHeight) {
+      throw new Error(
+        `The layer image is ${naturalWidth}\u00d7${naturalHeight}, but the data says ${layerWidth}\u00d7${layerHeight}.`
+      );
+    }
+
+    const layerBounds = L.latLngBounds([
+      [height - (offsetY + layerHeight), offsetX],
+      [height - offsetY, offsetX + layerWidth],
+    ]);
+
+    const overlay = L.imageOverlay(layer.image, layerBounds, {
+      opacity: 1,
+      zIndex: 2,
+      interactive: false,
+      className: "map-layer-overlay",
+    });
+
+    overlay.on("error", () => {
+      if (activeLayerOverlay !== overlay) return;
+      overlay.remove();
+      activeLayerOverlay = null;
+      baseOverlay.setOpacity(1);
+      currentLayerId = "base";
+      updateLayerButtons();
+      if (onLayerError) onLayerError(new Error(`Could not load layer "${target}".`));
+    });
+
+    if (activeLayerOverlay) activeLayerOverlay.remove();
+    overlay.addTo(map);
+    activeLayerOverlay = overlay;
+    baseOverlay.setOpacity(0.5);
+    currentLayerId = target;
+    updateLayerButtons();
+  }
+
+  function renderLayerButtons() {
+    if (!layerContainer) return;
+    clear(layerContainer);
+
+    if (layerById.size === 0) {
+      hide(layerContainer);
+      return;
+    }
+
+    const entries = [
+      { id: "base", name: "Base" },
+      ...sortedLayers().map((layer) => ({
+        id: layer.id,
+        name: layer.name || layer.id.toUpperCase(),
+      })),
+    ];
+
+    for (const entry of entries) {
+      const button = create("button", {
+        className: "layer-button",
+        text: entry.name,
+        attrs: {
+          type: "button",
+          "data-layer": entry.id,
+          "aria-pressed": "false",
+          title: `Show ${entry.name}`,
+        },
+      });
+      button.addEventListener("click", async () => {
+        if (button.disabled || currentLayerId === entry.id) return;
+        button.disabled = true;
+        button.classList.add("loading");
+        try {
+          await applyLayer(entry.id);
+        } catch (error) {
+          if (onLayerError) onLayerError(error);
+          else console.error(error);
+        } finally {
+          button.disabled = false;
+          button.classList.remove("loading");
+        }
+      });
+      layerContainer.append(button);
+    }
+
+    show(layerContainer);
+    updateLayerButtons();
+  }
+
+  renderLayerButtons();
 
   function setGuess(x, y) {
     if (isLocked) return;
@@ -174,11 +345,20 @@ export async function createMapController(container, { imageUrl, mapSize, locked
     lock,
     clearGuess,
     setGuess,
+    setLayer: applyLayer,
+    getLayer: () => currentLayerId,
+    layers: sortedLayers(),
     fit,
     destroy: () => {
+      layerRequestId += 1;
       if (line) line.remove();
       if (answerMarker) answerMarker.remove();
       if (guessMarker) guessMarker.remove();
+      if (activeLayerOverlay) activeLayerOverlay.remove();
+      if (layerContainer) {
+        clear(layerContainer);
+        hide(layerContainer);
+      }
       map.remove();
     },
     map,

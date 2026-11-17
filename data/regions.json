@@ -14,7 +14,45 @@
           "mapSize": {
             "width": 9000,
             "height": 6500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/valley-iv-the-hub-b1.webp",
+              "offsetX": 78,
+              "offsetY": 2040,
+              "width": 6095,
+              "height": 2536
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/valley-iv-the-hub-b2.webp",
+              "offsetX": 5973,
+              "offsetY": 1945,
+              "width": 472,
+              "height": 902
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/valley-iv-the-hub-l1.webp",
+              "offsetX": 6621,
+              "offsetY": 3265,
+              "width": 985,
+              "height": 550
+            },
+            {
+              "id": "l2",
+              "name": "L2",
+              "image": "assets/maps/layers/valley-iv-the-hub-l2.webp",
+              "offsetX": 6950,
+              "offsetY": 2928,
+              "width": 1055,
+              "height": 1264
+            }
+          ]
         },
         {
           "id": "valley-iv-originium-science-park",
@@ -24,7 +62,27 @@
           "mapSize": {
             "width": 7000,
             "height": 5500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/valley-iv-originium-science-park-b1.webp",
+              "offsetX": 3075,
+              "offsetY": 1630,
+              "width": 1348,
+              "height": 1644
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/valley-iv-originium-science-park-l1.webp",
+              "offsetX": 4299,
+              "offsetY": 2102,
+              "width": 1061,
+              "height": 783
+            }
+          ]
         },
         {
           "id": "valley-iv-valley-pass",
@@ -34,7 +92,18 @@
           "mapSize": {
             "width": 4500,
             "height": 4500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/valley-iv-valley-pass-b1.webp",
+              "offsetX": 1586,
+              "offsetY": 1137,
+              "width": 1807,
+              "height": 999
+            }
+          ]
         },
         {
           "id": "valley-iv-aburrey-quarry",
@@ -44,7 +113,27 @@
           "mapSize": {
             "width": 4000,
             "height": 4500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/valley-iv-aburrey-quarry-b1.webp",
+              "offsetX": 634,
+              "offsetY": 1134,
+              "width": 3135,
+              "height": 1453
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/valley-iv-aburrey-quarry-b2.webp",
+              "offsetX": 848,
+              "offsetY": 1228,
+              "width": 2494,
+              "height": 1937
+            }
+          ]
         },
         {
           "id": "valley-iv-origin-lodespring",
@@ -54,7 +143,36 @@
           "mapSize": {
             "width": 6000,
             "height": 7000
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/valley-iv-origin-lodespring-b1.webp",
+              "offsetX": 998,
+              "offsetY": 4585,
+              "width": 2099,
+              "height": 1457
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/valley-iv-origin-lodespring-l1.webp",
+              "offsetX": 1193,
+              "offsetY": 4002,
+              "width": 3572,
+              "height": 1032
+            },
+            {
+              "id": "l2",
+              "name": "L2",
+              "image": "assets/maps/layers/valley-iv-origin-lodespring-l2.webp",
+              "offsetX": 4019,
+              "offsetY": 3985,
+              "width": 283,
+              "height": 234
+            }
+          ]
         },
         {
           "id": "valley-iv-power-plateau",
@@ -64,7 +182,27 @@
           "mapSize": {
             "width": 6000,
             "height": 7500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/valley-iv-power-plateau-b1.webp",
+              "offsetX": 3290,
+              "offsetY": 1486,
+              "width": 1591,
+              "height": 2735
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/valley-iv-power-plateau-l1.webp",
+              "offsetX": 530,
+              "offsetY": 785,
+              "width": 3703,
+              "height": 1606
+            }
+          ]
         }
       ]
     },
@@ -82,7 +220,63 @@
           "mapSize": {
             "width": 9500,
             "height": 11000
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-wuling-city-b1.webp",
+              "offsetX": 6614,
+              "offsetY": 7171,
+              "width": 761,
+              "height": 2968
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/wuling-wuling-city-b2.webp",
+              "offsetX": 6630,
+              "offsetY": 7178,
+              "width": 710,
+              "height": 2904
+            },
+            {
+              "id": "b3",
+              "name": "B3",
+              "image": "assets/maps/layers/wuling-wuling-city-b3.webp",
+              "offsetX": 6439,
+              "offsetY": 7159,
+              "width": 675,
+              "height": 718
+            },
+            {
+              "id": "b4",
+              "name": "B4",
+              "image": "assets/maps/layers/wuling-wuling-city-b4.webp",
+              "offsetX": 6665,
+              "offsetY": 7208,
+              "width": 1169,
+              "height": 549
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-wuling-city-l1.webp",
+              "offsetX": 6640,
+              "offsetY": 9750,
+              "width": 467,
+              "height": 445
+            },
+            {
+              "id": "l3",
+              "name": "L3",
+              "image": "assets/maps/layers/wuling-wuling-city-l3.webp",
+              "offsetX": 185,
+              "offsetY": 5500,
+              "width": 1164,
+              "height": 750
+            }
+          ]
         },
         {
           "id": "wuling-jingyu-valley",
@@ -92,7 +286,18 @@
           "mapSize": {
             "width": 6000,
             "height": 9500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-jingyu-valley-b1.webp",
+              "offsetX": 5581,
+              "offsetY": 2500,
+              "width": 419,
+              "height": 1863
+            }
+          ]
         },
         {
           "id": "wuling-qingbo-stockade",
@@ -102,7 +307,36 @@
           "mapSize": {
             "width": 5500,
             "height": 7000
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-qingbo-stockade-b1.webp",
+              "offsetX": 70,
+              "offsetY": 505,
+              "width": 4626,
+              "height": 4393
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-qingbo-stockade-l1.webp",
+              "offsetX": 2729,
+              "offsetY": 3968,
+              "width": 1419,
+              "height": 1384
+            },
+            {
+              "id": "l2",
+              "name": "L2",
+              "image": "assets/maps/layers/wuling-qingbo-stockade-l2.webp",
+              "offsetX": 3272,
+              "offsetY": 4190,
+              "width": 896,
+              "height": 449
+            }
+          ]
         },
         {
           "id": "wuling-marker-stone",
@@ -112,7 +346,54 @@
           "mapSize": {
             "width": 8000,
             "height": 7500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-marker-stone-b1.webp",
+              "offsetX": 4322,
+              "offsetY": 1272,
+              "width": 2593,
+              "height": 5914
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-marker-stone-l1.webp",
+              "offsetX": 1039,
+              "offsetY": 1342,
+              "width": 2937,
+              "height": 3115
+            },
+            {
+              "id": "l2",
+              "name": "L2",
+              "image": "assets/maps/layers/wuling-marker-stone-l2.webp",
+              "offsetX": 1039,
+              "offsetY": 1342,
+              "width": 2937,
+              "height": 3115
+            },
+            {
+              "id": "l3",
+              "name": "L3",
+              "image": "assets/maps/layers/wuling-marker-stone-l3.webp",
+              "offsetX": 1039,
+              "offsetY": 1342,
+              "width": 2937,
+              "height": 3115
+            },
+            {
+              "id": "l4",
+              "name": "L4",
+              "image": "assets/maps/layers/wuling-marker-stone-l4.webp",
+              "offsetX": 1039,
+              "offsetY": 1342,
+              "width": 2937,
+              "height": 3115
+            }
+          ]
         },
         {
           "id": "wuling-test-area",
@@ -122,7 +403,27 @@
           "mapSize": {
             "width": 7000,
             "height": 5500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-test-area-b1.webp",
+              "offsetX": 1392,
+              "offsetY": 543,
+              "width": 3008,
+              "height": 3326
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/wuling-test-area-b2.webp",
+              "offsetX": 3175,
+              "offsetY": 1114,
+              "width": 1304,
+              "height": 2633
+            }
+          ]
         },
         {
           "id": "wuling-sword-vault-dale",
@@ -142,7 +443,27 @@
           "mapSize": {
             "width": 6500,
             "height": 5000
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-yinglung-pass-b1.webp",
+              "offsetX": 5087,
+              "offsetY": 792,
+              "width": 948,
+              "height": 469
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/wuling-yinglung-pass-b2.webp",
+              "offsetX": 5576,
+              "offsetY": 1128,
+              "width": 410,
+              "height": 334
+            }
+          ]
         },
         {
           "id": "wuling-north-wuling-exclusion-zone",
@@ -152,7 +473,36 @@
           "mapSize": {
             "width": 10000,
             "height": 8000
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-north-wuling-exclusion-zone-b1.webp",
+              "offsetX": 1910,
+              "offsetY": 1073,
+              "width": 6508,
+              "height": 5584
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/wuling-north-wuling-exclusion-zone-b2.webp",
+              "offsetX": 7328,
+              "offsetY": 5366,
+              "width": 348,
+              "height": 540
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-north-wuling-exclusion-zone-l1.webp",
+              "offsetX": 8721,
+              "offsetY": 4500,
+              "width": 279,
+              "height": 206
+            }
+          ]
         },
         {
           "id": "wuling-snowy-forest",
@@ -162,7 +512,36 @@
           "mapSize": {
             "width": 6500,
             "height": 5500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-snowy-forest-b1.webp",
+              "offsetX": 1330,
+              "offsetY": 702,
+              "width": 4563,
+              "height": 4442
+            },
+            {
+              "id": "b2",
+              "name": "B2",
+              "image": "assets/maps/layers/wuling-snowy-forest-b2.webp",
+              "offsetX": 2301,
+              "offsetY": 3676,
+              "width": 1477,
+              "height": 1574
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-snowy-forest-l1.webp",
+              "offsetX": 2935,
+              "offsetY": 2050,
+              "width": 310,
+              "height": 269
+            }
+          ]
         },
         {
           "id": "wuling-sis-painting",
@@ -172,7 +551,36 @@
           "mapSize": {
             "width": 13500,
             "height": 9000
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-sis-painting-b1.webp",
+              "offsetX": 7128,
+              "offsetY": 3010,
+              "width": 1649,
+              "height": 3744
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-sis-painting-l1.webp",
+              "offsetX": 101,
+              "offsetY": 2813,
+              "width": 6265,
+              "height": 1206
+            },
+            {
+              "id": "l2",
+              "name": "L2",
+              "image": "assets/maps/layers/wuling-sis-painting-l2.webp",
+              "offsetX": 5769,
+              "offsetY": 3242,
+              "width": 588,
+              "height": 712
+            }
+          ]
         },
         {
           "id": "wuling-suming",
@@ -182,7 +590,27 @@
           "mapSize": {
             "width": 4500,
             "height": 4500
-          }
+          },
+          "layers": [
+            {
+              "id": "b1",
+              "name": "B1",
+              "image": "assets/maps/layers/wuling-suming-b1.webp",
+              "offsetX": 1754,
+              "offsetY": 674,
+              "width": 1978,
+              "height": 3129
+            },
+            {
+              "id": "l1",
+              "name": "L1",
+              "image": "assets/maps/layers/wuling-suming-l1.webp",
+              "offsetX": 3363,
+              "offsetY": 615,
+              "width": 976,
+              "height": 1209
+            }
+          ]
         }
       ]
     }
