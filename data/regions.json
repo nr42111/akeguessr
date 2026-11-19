@@ -492,15 +492,6 @@
               "offsetY": 5366,
               "width": 348,
               "height": 540
-            },
-            {
-              "id": "l1",
-              "name": "L1",
-              "image": "assets/maps/layers/wuling-north-wuling-exclusion-zone-l1.webp",
-              "offsetX": 8721,
-              "offsetY": 4500,
-              "width": 279,
-              "height": 206
             }
           ]
         },

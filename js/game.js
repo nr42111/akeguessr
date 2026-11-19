@@ -15,6 +15,15 @@ export function pickRoundLocations(locations, count = ROUND_COUNT, rng = Math.ra
   return shuffle(locations, rng).slice(0, Math.min(count, locations.length));
 }
 
+export function buildRoundPool(locations, seenIds, roundCount = ROUND_COUNT) {
+  const seen = new Set(seenIds);
+  let pool = locations.filter((location) => !seen.has(location.id));
+  const required = Math.min(roundCount, locations.length);
+  const reset = pool.length < required;
+  if (reset) pool = locations.slice();
+  return { pool, reset };
+}
+
 export function createGame(locations, { roundCount = ROUND_COUNT, rng = Math.random } = {}) {
   return {
     rounds: pickRoundLocations(locations, roundCount, rng),

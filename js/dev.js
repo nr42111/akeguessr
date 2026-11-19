@@ -40,7 +40,6 @@ function cacheElements() {
     "devBackButton",
     "devSelectionOverlay",
     "devSelectionBackButton",
-    "devSelectionEyebrow",
     "devSelectionTitle",
     "devSelectionHint",
     "devChoiceList",
@@ -347,7 +346,6 @@ function renderRegions() {
   state.selectionMode = "regions";
   state.selectionRegion = null;
   elements.devSelectionBackButton.textContent = "Back";
-  elements.devSelectionEyebrow.textContent = "Step 1";
   elements.devSelectionTitle.textContent = "Choose a region";
   elements.devSelectionHint.textContent = "Select the region for this photo.";
   clear(elements.devChoiceList);
@@ -377,7 +375,6 @@ function renderSubRegions(region) {
   state.selectionMode = "subregions";
   state.selectionRegion = region;
   elements.devSelectionBackButton.textContent = "Back";
-  elements.devSelectionEyebrow.textContent = "Step 2";
   elements.devSelectionTitle.textContent = region.name;
   elements.devSelectionHint.textContent = "Choose the map for this photo.";
   clear(elements.devChoiceList);

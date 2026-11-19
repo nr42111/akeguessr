@@ -6,6 +6,7 @@ import { MAX_POINTS, pointsForDistanceMeters, scoreForGuess } from "../js/scorin
 import {
   ROUND_COUNT,
   advanceGame,
+  buildRoundPool,
   createGame,
   evaluateGuess,
   getCurrentRound,
@@ -142,4 +143,37 @@ test("advanceGame reports when the game is complete", () => {
   assert.equal(advanceGame(game), false);
   assert.equal(game.currentIndex, 2);
   assert.equal(totalScore(game), 300);
+});
+
+test("round pool excludes already seen locations while enough remain", () => {
+  const locations = Array.from({ length: 10 }, (_, index) => ({ id: `loc-${index}` }));
+  const seen = new Set(["loc-0", "loc-1", "loc-2", "loc-3"]);
+
+  const { pool, reset } = buildRoundPool(locations, seen);
+
+  assert.equal(reset, false);
+  assert.equal(pool.length, 6);
+  assert.equal(pool.some((location) => seen.has(location.id)), false);
+});
+
+test("round pool resets when fewer than five unseen locations remain", () => {
+  const locations = Array.from({ length: 10 }, (_, index) => ({ id: `loc-${index}` }));
+  const seen = new Set(["loc-0", "loc-1", "loc-2", "loc-3", "loc-4", "loc-5"]);
+
+  const { pool, reset } = buildRoundPool(locations, seen);
+
+  assert.equal(reset, true);
+  assert.deepEqual(pool, locations);
+});
+
+test("round pool uses the available count when fewer than five total locations exist", () => {
+  const locations = Array.from({ length: 3 }, (_, index) => ({ id: `loc-${index}` }));
+
+  const first = buildRoundPool(locations, new Set());
+  assert.equal(first.reset, false);
+  assert.equal(first.pool.length, 3);
+
+  const exhausted = buildRoundPool(locations, new Set(["loc-0", "loc-1", "loc-2"]));
+  assert.equal(exhausted.reset, true);
+  assert.equal(exhausted.pool.length, 3);
 });

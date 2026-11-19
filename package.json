@@ -1,6 +1,6 @@
 {
   "name": "akeguessr",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "A no-moving, no-panning GeoGuessr-style game with static photos for custom regions and sub-regions, hosted on GitHub Pages.",

@@ -622,13 +622,6 @@
     "y": 9285,
     "heading": 318
   },
-  "p_0090.jpg": {
-    "regionId": "wuling",
-    "subRegionId": "wuling-wuling-city",
-    "x": 5766,
-    "y": 9640,
-    "heading": 17
-  },
   "p_0091.jpg": {
     "regionId": "wuling",
     "subRegionId": "wuling-wuling-city",
@@ -978,5 +971,467 @@
     "x": 10775,
     "y": 1230,
     "heading": 242
+  },
+  "p_0090.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 5783,
+    "y": 9663,
+    "heading": 3
+  },
+  "p_0141.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-test-area",
+    "x": 3846,
+    "y": 1188,
+    "heading": 270
+  },
+  "p_0142.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-valley-pass",
+    "x": 3086,
+    "y": 1781,
+    "heading": 272
+  },
+  "p_0143.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-valley-pass",
+    "x": 1193,
+    "y": 2227,
+    "heading": 311
+  },
+  "p_0144.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-valley-pass",
+    "x": 1549,
+    "y": 2774,
+    "heading": 197
+  },
+  "p_0145.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-valley-pass",
+    "x": 3802,
+    "y": 2595,
+    "heading": 262
+  },
+  "p_0146.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 6237,
+    "y": 971,
+    "heading": 0
+  },
+  "p_0147.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 6445,
+    "y": 3736,
+    "heading": 103
+  },
+  "p_0148.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 7377,
+    "y": 3488,
+    "heading": 320
+  },
+  "p_0149.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 5142,
+    "y": 4766,
+    "heading": 265
+  },
+  "p_0150.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 4156,
+    "y": 5908,
+    "heading": 188
+  },
+  "p_0151.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 1667,
+    "y": 2000,
+    "heading": 195
+  },
+  "p_0152.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-the-hub",
+    "x": 141,
+    "y": 3326,
+    "heading": 17
+  },
+  "p_0153.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-aburrey-quarry",
+    "x": 3192,
+    "y": 1763,
+    "heading": 315
+  },
+  "p_0154.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-aburrey-quarry",
+    "x": 1069,
+    "y": 1455,
+    "heading": 234
+  },
+  "p_0155.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-aburrey-quarry",
+    "x": 1480,
+    "y": 2519,
+    "heading": 144
+  },
+  "p_0156.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-aburrey-quarry",
+    "x": 2283,
+    "y": 3357,
+    "heading": 183
+  },
+  "p_0157.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-originium-science-park",
+    "x": 3472,
+    "y": 2084,
+    "heading": 180
+  },
+  "p_0158.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-originium-science-park",
+    "x": 4112,
+    "y": 2923,
+    "heading": 144
+  },
+  "p_0159.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-originium-science-park",
+    "x": 5028,
+    "y": 2211,
+    "heading": 350
+  },
+  "p_0160.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 2782,
+    "y": 6323,
+    "heading": 87
+  },
+  "p_0161.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 2271,
+    "y": 5031,
+    "heading": 140
+  },
+  "p_0162.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 3341,
+    "y": 5033,
+    "heading": 154
+  },
+  "p_0163.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 5256,
+    "y": 4379,
+    "heading": 15
+  },
+  "p_0164.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 3267,
+    "y": 4282,
+    "heading": 43
+  },
+  "p_0165.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 3897,
+    "y": 3177,
+    "heading": 340
+  },
+  "p_0166.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 528,
+    "y": 900,
+    "heading": 0
+  },
+  "p_0167.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 1067,
+    "y": 2610,
+    "heading": 262
+  },
+  "p_0168.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 2576,
+    "y": 3139,
+    "heading": 71
+  },
+  "p_0169.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-origin-lodespring",
+    "x": 4307,
+    "y": 1737,
+    "heading": 183
+  },
+  "p_0170.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 5084,
+    "y": 1998,
+    "heading": 291
+  },
+  "p_0171.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 4220,
+    "y": 1816,
+    "heading": 180
+  },
+  "p_0172.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 2798,
+    "y": 1068,
+    "heading": 44
+  },
+  "p_0173.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 1894,
+    "y": 1644,
+    "heading": 5
+  },
+  "p_0174.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 923,
+    "y": 1927,
+    "heading": 139
+  },
+  "p_0175.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 1124,
+    "y": 3728,
+    "heading": 231
+  },
+  "p_0176.jpg": {
+    "regionId": "valley-iv",
+    "subRegionId": "valley-iv-power-plateau",
+    "x": 3116,
+    "y": 4551,
+    "heading": 247
+  },
+  "p_0177.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-suming",
+    "x": 3486,
+    "y": 873,
+    "heading": 270
+  },
+  "p_0178.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-suming",
+    "x": 1283,
+    "y": 1388,
+    "heading": 125
+  },
+  "p_0179.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-sword-vault-dale",
+    "x": 6645,
+    "y": 3823,
+    "heading": 0
+  },
+  "p_0180.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-sword-vault-dale",
+    "x": 1780,
+    "y": 2423,
+    "heading": 82
+  },
+  "p_0181.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-qingbo-stockade",
+    "x": 3702,
+    "y": 2086,
+    "heading": 92
+  },
+  "p_0182.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-qingbo-stockade",
+    "x": 1499,
+    "y": 3304,
+    "heading": 313
+  },
+  "p_0183.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-qingbo-stockade",
+    "x": 4411,
+    "y": 4402,
+    "heading": 241
+  },
+  "p_0184.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-jingyu-valley",
+    "x": 4784,
+    "y": 5824,
+    "heading": 127
+  },
+  "p_0185.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-marker-stone",
+    "x": 6210,
+    "y": 1707,
+    "heading": 270
+  },
+  "p_0186.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-marker-stone",
+    "x": 6310,
+    "y": 2473,
+    "heading": 115
+  },
+  "p_0187.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-marker-stone",
+    "x": 5858,
+    "y": 6049,
+    "heading": 154
+  },
+  "p_0188.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-test-area",
+    "x": 3378,
+    "y": 3155,
+    "heading": 180
+  },
+  "p_0189.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-test-area",
+    "x": 2967,
+    "y": 3018,
+    "heading": 270
+  },
+  "p_0190.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 996,
+    "y": 5877,
+    "heading": 89
+  },
+  "p_0191.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 7552,
+    "y": 9407,
+    "heading": 210
+  },
+  "p_0192.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 2682,
+    "y": 5342,
+    "heading": 89
+  },
+  "p_0193.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 3305,
+    "y": 5005,
+    "heading": 0
+  },
+  "p_0194.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 2638,
+    "y": 7741,
+    "heading": 229
+  },
+  "p_0195.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 4011,
+    "y": 5820,
+    "heading": 0
+  },
+  "p_0196.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 6320,
+    "y": 4119,
+    "heading": 173
+  },
+  "p_0197.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-wuling-city",
+    "x": 7466,
+    "y": 6669,
+    "heading": 139
+  },
+  "p_0198.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-yinglung-pass",
+    "x": 4527,
+    "y": 2290,
+    "heading": 51
+  },
+  "p_0199.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-yinglung-pass",
+    "x": 4334,
+    "y": 3508,
+    "heading": 337
+  },
+  "p_0200.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-yinglung-pass",
+    "x": 5480,
+    "y": 1028,
+    "heading": 90
+  },
+  "p_0201.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-north-wuling-exclusion-zone",
+    "x": 7925,
+    "y": 4897,
+    "heading": 286
+  },
+  "p_0202.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-north-wuling-exclusion-zone",
+    "x": 5438,
+    "y": 5743,
+    "heading": 354
+  },
+  "p_0203.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-north-wuling-exclusion-zone",
+    "x": 2982,
+    "y": 5463,
+    "heading": 120
+  },
+  "p_0204.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-snowy-forest",
+    "x": 3008,
+    "y": 4551,
+    "heading": 247
+  },
+  "p_0205.jpg": {
+    "regionId": "wuling",
+    "subRegionId": "wuling-snowy-forest",
+    "x": 5474,
+    "y": 1980,
+    "heading": 270
   }
 }

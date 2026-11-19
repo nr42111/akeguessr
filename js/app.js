@@ -1,6 +1,7 @@
 import { clamp, formatDistanceMeters } from "./geo.js";
 import {
   advanceGame,
+  buildRoundPool,
   createGame,
   evaluateGuess,
   getCurrentRound,
@@ -9,13 +10,19 @@ import {
 } from "./game.js";
 import { createMapController } from "./map.js";
 import { MAX_POINTS } from "./scoring.js";
-import { loadBestScore, updateBestScore } from "./storage.js";
+import {
+  loadBestScore,
+  loadSeenLocations,
+  saveSeenLocations,
+  updateBestScore,
+} from "./storage.js";
 import { byId, clear, create, formatNumber, hide, show } from "./ui.js";
 
 const state = {
   regions: [],
   subRegionById: new Map(),
   locations: [],
+  seenLocationIds: new Set(),
   game: null,
   bestScore: 0,
   selectedRegion: null,
@@ -98,7 +105,6 @@ function cacheElements() {
     "guessLegend",
     "selectionOverlay",
     "selectionBackButton",
-    "selectionEyebrow",
     "selectionTitle",
     "selectionHint",
     "choiceList",
@@ -202,6 +208,17 @@ function prepareData(regionsDoc, coordinatesDoc) {
       );
     });
 
+  state.seenLocationIds = new Set(loadSeenLocations());
+  const locationIds = new Set(state.locations.map((location) => location.id));
+  let pruned = false;
+  for (const id of state.seenLocationIds) {
+    if (!locationIds.has(id)) {
+      state.seenLocationIds.delete(id);
+      pruned = true;
+    }
+  }
+  if (pruned) saveSeenLocations([...state.seenLocationIds]);
+
   if (state.regions.length === 0) {
     throw new Error("No regions were found in data/regions.json.");
   }
@@ -246,7 +263,10 @@ function hasMap() {
 function syncStage() {
   const mapSelected = hasMap();
   elements.mapsButton.classList.toggle("hidden", mapSelected);
-  elements.mapBackButton.classList.toggle("hidden", !mapSelected);
+  elements.mapBackButton.classList.toggle(
+    "hidden",
+    !mapSelected || Boolean(state.roundResult)
+  );
   elements.mapView.classList.toggle("hidden", !mapSelected);
   elements.mapTitle.classList.toggle("hidden", !mapSelected || state.view === "photo");
   elements.photoPipButton.classList.toggle(
@@ -612,7 +632,6 @@ function renderRegionChoices() {
   state.selectionMode = "regions";
   state.selectionRegion = null;
   elements.selectionBackButton.textContent = "Back";
-  elements.selectionEyebrow.textContent = "Step 1";
   elements.selectionTitle.textContent = "Choose a region";
   elements.selectionHint.textContent = "Which region is this photo from?";
   clear(elements.choiceList);
@@ -651,7 +670,6 @@ function renderSubRegionChoices(region) {
   state.selectionMode = "subregions";
   state.selectionRegion = region;
   elements.selectionBackButton.textContent = "Back";
-  elements.selectionEyebrow.textContent = "Step 2";
   elements.selectionTitle.textContent = region.name;
   elements.selectionHint.textContent = "Choose the sub-region shown on the map.";
   clear(elements.choiceList);
@@ -702,6 +720,12 @@ function selectSubRegion(subRegion) {
   loadMap(subRegion);
 }
 
+function markLocationSeen(id) {
+  if (!id || state.seenLocationIds.has(id)) return;
+  state.seenLocationIds.add(id);
+  saveSeenLocations([...state.seenLocationIds]);
+}
+
 function startGame() {
   closeReview();
   if (state.locations.length === 0) {
@@ -711,7 +735,12 @@ function startGame() {
 
   resetMapState();
   preloadedPhotos.length = 0;
-  state.game = createGame(state.locations);
+  const { pool, reset } = buildRoundPool(state.locations, state.seenLocationIds);
+  if (reset) {
+    state.seenLocationIds.clear();
+    saveSeenLocations([]);
+  }
+  state.game = createGame(pool);
   state.bestScore = loadBestScore();
   renderBestScore();
   showScreen("game");
@@ -774,6 +803,7 @@ function showRoundResult(result) {
   elements.nextButton.textContent =
     state.game.results.length >= state.game.rounds.length ? "See results" : "Next round";
   syncStage();
+  markLocationSeen(state.currentRound.id);
 
   if (result.points >= MAX_POINTS) playPerfectSound();
 
@@ -1179,11 +1209,7 @@ function bindEvents() {
 
   elements.mapsButton.addEventListener("click", () => openSelection("regions"));
   elements.mapBackButton.addEventListener("click", () => {
-    if (state.roundResult) {
-      showToast("This round is already scored.");
-      return;
-    }
-    openSelection("subregions");
+    if (!state.roundResult) openSelection("subregions");
   });
   elements.photoPipButton.addEventListener("click", () => setGameView("photo"));
   elements.mapPipButton.addEventListener("click", () => setGameView("map"));

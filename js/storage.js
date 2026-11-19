@@ -1,4 +1,5 @@
 const BEST_SCORE_KEY = "akeguessr.bestScore.v1";
+const SEEN_LOCATIONS_KEY = "akeguessr.seenLocations.v1";
 
 export function loadBestScore() {
   try {
@@ -25,4 +26,25 @@ export function updateBestScore(score) {
     return { best: score, isNew: true };
   }
   return { best, isNew: false };
+}
+
+export function loadSeenLocations() {
+  try {
+    const raw = localStorage.getItem(SEEN_LOCATIONS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((id) => typeof id === "string" && id);
+  } catch (error) {
+    return [];
+  }
+}
+
+export function saveSeenLocations(ids) {
+  try {
+    localStorage.setItem(SEEN_LOCATIONS_KEY, JSON.stringify(ids));
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

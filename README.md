@@ -7,6 +7,7 @@ No build step, no backend, no accounts. The game runs on GitHub Pages as plain H
 ## Features
 
 - Five rounds per game with no repeated locations.
+- A photo is cached as seen once a guess reveals the location; unguessed photos stay in the pool. The pool resets when fewer than five unseen photos remain.
 - Static-photo gameplay with no moving or panning.
 - Photo-first round flow with a semi-opaque **Maps** button.
 - Region -> sub-region selection with a **Back** button.
@@ -239,6 +240,6 @@ The site uses relative asset paths and includes `.nojekyll`, so it works under a
 - The local dev server serves files with `Cache-Control: no-store`; map prefetching is intended for the deployed site/CDN.
 - Photos are static images. This is intentionally a no-moving, no-panning variant of GeoGuessr; there is no 360° viewer.
 - Photo coordinate data is visible in the client-side JSON. That is fine for a casual game but is not cheat-proof.
-- The `localStorage` best score is per browser and per origin.
+- The `localStorage` best score and seen-photo cache are per browser and per origin.
 - There is no timer, account system, or global leaderboard.
 - Photo and map files are only preloaded on demand; the current round's photo loads when the round starts.
